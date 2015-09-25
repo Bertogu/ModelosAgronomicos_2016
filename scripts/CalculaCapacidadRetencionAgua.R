@@ -19,7 +19,7 @@ library(e1071)
 library(maptools)
 
 
-### Esto es una prueba para utilizar pull
+
 getwd()
 a="ImagesOut/"
 print(paste(a,"RK_Sand_NoData.tif",sep="",collapse=NULL))
