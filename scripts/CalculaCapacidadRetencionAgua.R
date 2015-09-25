@@ -15,8 +15,8 @@ gc()
 # library(randomForest)
 # library(plyr)
 # library(ggplot2)
-# library(e1071)
-# library(maptools)
+library(e1071)
+library(maptools)
 
 
 getwd()
