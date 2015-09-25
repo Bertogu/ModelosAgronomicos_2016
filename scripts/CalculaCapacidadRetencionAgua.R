@@ -23,10 +23,11 @@ library(maptools)
 source("scripts/funcionesComunes.R")
 CargaimagenesDeTextura()
 
+#TODO: Remove 0 values from clay 
 a<-preparaDatos()
 str(a)
 
-writeGDAL(fname="ImagesOut/Clay.tif",drivername="GTiff",dataset=a$clay_fix)
+writeGDAL(fname="ImagesOut/Clay.tif",drivername="GTiff",dataset=a[7])
 
 
 
