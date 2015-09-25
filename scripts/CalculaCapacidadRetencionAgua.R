@@ -7,16 +7,16 @@ gc()
 # load required libraries
 library(rgdal)
 library(gdalUtils)
-# library(stringr) # for manging strings
-# library(GSIF)
-# library(sp)
-# library(gstat)
-# library(aqp)
-# library(randomForest)
-# library(plyr)
-# library(ggplot2)
-# library(e1071)
-# library(maptools)
+library(stringr) # for manging strings
+library(GSIF)
+library(sp)
+library(gstat)
+library(aqp)
+library(randomForest)
+library(plyr)
+library(ggplot2)
+library(e1071)
+library(maptools)
 
 
 getwd()
