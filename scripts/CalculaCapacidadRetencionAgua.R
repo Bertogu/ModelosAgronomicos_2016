@@ -19,7 +19,6 @@ library(e1071)
 library(maptools)
 
 
-
 source("scripts/funcionesComunes.R")
 CargaimagenesDeTextura()
 
