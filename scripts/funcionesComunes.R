@@ -46,6 +46,9 @@ preparaDatos<-function(dirIn="ImagesOut/"){
     covar.grid$sand_fix<-ifelse(is.na(covar.grid$RK_Sand_NoData),covar.grid$SK_Sand_Resample,covar.grid$RK_Sand_NoData)
     covar.grid$silt_fix<-ifelse(is.na(covar.grid$RK_Silt_NoData),covar.grid$SK_Silt_Resample,covar.grid$RK_Silt_NoData)
     covar.grid$clay_fix<-100-(covar.grid$sand_fix+covar.grid$silt_fix)
+    covar.grid$clay_fix<-ifelse(covar.grid$clay_fix<0,0,covar.grid$clay_fix)
+    
+    
     
     
     return(covar.grid)
