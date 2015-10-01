@@ -10,8 +10,7 @@ CargaimagenesDeTextura<-function(dirOut="ImagesOut/"){
     gdalwarp(srcfile="Textura/RegressionKriging/500m_exp/RK_Silt.tif",dstfile=paste(dirOut,"RK_Silt_NoData.tif",sep="",collapse=NULL),
              t_srs='EPSG:25830', of="GTiff", ot="Float32", co="TFW=YES", srcnodata= "0",
              dstnodata="-9999",tr="500 500",te="165150 4439190 602150 4789190")
-    
-    
+       
     gdalwarp(srcfile="Textura/SimpleKriging/500m_exp/SK_Arena_500m.tif",dstfile=paste(dirOut,"SK_Sand_Resample.tif",sep="",collapse=NULL),
              t_srs='EPSG:25830', of="GTiff", ot="Float32", co="TFW=YES",
              dstnodata="-9999", tr="500 500",te="165150 4439190 602150 4789190")
@@ -46,11 +45,9 @@ preparaDatos<-function(dirIn="ImagesOut/"){
     covar.grid$sand_fix<-ifelse(is.na(covar.grid$RK_Sand_NoData),covar.grid$SK_Sand_Resample,covar.grid$RK_Sand_NoData)
     covar.grid$silt_fix<-ifelse(is.na(covar.grid$RK_Silt_NoData),covar.grid$SK_Silt_Resample,covar.grid$RK_Silt_NoData)
     covar.grid$clay_fix<-100-(covar.grid$sand_fix+covar.grid$silt_fix)
+    covar.grid$MO_fix<-covar.grid$SK_OrganicMatter_Resample
     covar.grid$clay_fix<-ifelse(covar.grid$clay_fix<0,0,covar.grid$clay_fix)
-    
-    
-    
-    
+
     return(covar.grid)
     
     
