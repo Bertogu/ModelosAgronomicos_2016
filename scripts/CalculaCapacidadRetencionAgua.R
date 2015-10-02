@@ -42,8 +42,11 @@ Textura$CC_Vol<-Textura$CC_Prov+(1.283*Textura$CC_Prov-0.374*Textura$CC_Prov-0.0
 Textura$PM_Prov<- -0.024*Textura$sand_fix/100+0.487*Textura$clay_fix/100+0.006*Textura$MO_fix+0.005*Textura$sand_fix/100*Textura$MO_fix-0.013*Textura$clay_fix/100*Textura$clay_fix+0.068*Textura$sand_fix/100*Textura$clay_fix/100+0.031
 #PM_Vol<-PM_Prov+PM_Prov*0.14-0.02 # if (PM_Vol < 0) {PM_Prov<-0.017545}
 
-Textura$PM_Vol<-ifelse(test=(Textura$PM_Prov+Textura$PM_Prov*0.14-0.02)<0,yes=1.3e-06,no=Textura$PM_Vol+Textura$PM_Vol*0.14-0.02)
-
+#Textura$PM_Vol<-ifelse(test=(Textura$PM_Prov+Textura$PM_Prov*0.14-0.02)<0,yes=1.3e-06,no=Textura$PM_Vol+Textura$PM_Vol*0.14-0.02)
+Textura$PM_Vol<-Textura$PM_Prov+Textura$PM_Prov*0.14-0.02
+summary(Textura$PM_Vol)
+Textura$PM_Vol<-ifelse(Textura$PM_Vol>=0,yes=Textura$PM_Vol,no=0.017545+0.017545*0.14-0.02)
+summary(Textura$PM_Vol)
 
 # if ((PM_Prov+PM_Prov*0.14-0.02)<0){
 #     PM_Vol<-0.017545+0.017545*0.14-0.02
@@ -60,12 +63,14 @@ Textura$Perme_mm_h<- 1930*Textura$Perme_2^(3-Textura$Perme_3)
 
 Textura$CRAD<-Textura$CC_Vol-Textura$PM_Vol
 
-summary(Textura$PM_Vol)
-summary(Textura$CC_Vol)
 
-writeGDAL(dataset=Textura["CRAD"],fname="ImagesOut/CRAD.tif",drivername="GTiff",type="Float32",options="TFW=YES")
-writeGDAL(dataset=Textura["CC_Vol"],fname="ImagesOut/FiledCapacity.tif",drivername="GTiff",type="Float32",options="TFW=YES")
-writeGDAL(dataset=Textura["PM_Vol"],fname="ImagesOut/WiltingPoint.tif",drivername="GTiff",type="Float32",options="TFW=YES")
+summary(Textura$CC_Vol)
+summary(Textura$PM_Vol)
+summary(Textura$CRAD)
+
+writeGDAL(dataset=Textura["CRAD"],fname="Results/CRAD.tif",drivername="GTiff",type="Float32",options="TFW=YES")
+writeGDAL(dataset=Textura["CC_Vol"],fname="Results/FiledCapacity.tif",drivername="GTiff",type="Float32",options="TFW=YES")
+writeGDAL(dataset=Textura["PM_Vol"],fname="Results/WiltingPoint.tif",drivername="GTiff",type="Float32",options="TFW=YES")
 
 
 
