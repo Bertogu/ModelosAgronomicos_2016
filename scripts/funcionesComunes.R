@@ -1,4 +1,5 @@
-CargaimagenesDeTextura<-function(dirOut="ImagesOut/"){
+
+AjustaimagenesDeTextura<-function(dirOut="ImagesOut/"){
     
     # Carga de las imagenes interpoladas mediante Regression Kriging de textura (Arena y limo).
     # se ajusta cada imagen al marco y resolución de trabajo
@@ -22,7 +23,7 @@ CargaimagenesDeTextura<-function(dirOut="ImagesOut/"){
     
 }
 
-preparaDatos<-function(dirIn="ImagesOut/"){
+cargaDatos<-function(dirIn="ImagesOut/"){
     Tif_files<-list.files(path=dirIn,pattern="*.tif")
     tfw_file<-list.files(path=dirIn,pattern="*.tfw")
     xml_file<-list.files(path=dirIn,pattern="*.xml")
