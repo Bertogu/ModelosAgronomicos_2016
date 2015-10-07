@@ -44,7 +44,6 @@ Textura$PM_Vol<-Textura$PM_Prov+Textura$PM_Prov*0.14-0.02 # if (PM_Vol < 0) {PM_
 
 Textura$PM_Vol<-ifelse(test=Textura$PM_Vol<0,yes=1.0e-06,no=Textura$PM_Vol)
 
-
 # if ((PM_Prov+PM_Prov*0.14-0.02)<0){
 #     PM_Vol<-0.017545+0.017545*0.14-0.02
 # } else{
@@ -52,6 +51,9 @@ Textura$PM_Vol<-ifelse(test=Textura$PM_Vol<0,yes=1.0e-06,no=Textura$PM_Vol)
 # }
 
 
+sand<-27.24/100
+clay<-51.94/100
+MO<-1.6968
 
 
 Perme_1<- 0.278*sand/100+0.034*clay/100+0.022*MO-0.018*sand/100*MO-0.027*clay/100*MO-0.584*sand/100*clay/100+0.078
@@ -59,37 +61,19 @@ Perme_2<- 1-(1-(Perme_1+0.636*Perme_1-0.107+CC_Prov+(1.283*CC_Prov*CC_Prov-0.374
 Perme_3<- (log(CC_Prov+(1.283*CC_Prov*CC_Prov-0.374*CC_Prov-0.015))-log(PM_Vol))/(log(1500)-log(33))
 Perme_mm_dia<- (1930*Perme_2^(3-Perme_3))*24
 
-
-
-
-
-
-
-
-
-
 # Permeability
+
+
 Textura$Perme_1<- 0.278*Textura$sand/100+0.034*Textura$clay/100+0.022*Textura$MO-0.018*Textura$sand/100*Textura$MO-0.027*Textura$clay/100*Textura$MO-0.584*Textura$sand/100*Textura$clay/100+0.078
 Textura$Perme_2<- 1-(1-(Textura$Perme_1+0.636*Textura$Perme_1-0.107+Textura$CC_Prov+(1.283*Textura$CC_Prov*Textura$CC_Prov-0.374*Textura$CC_Prov-0.015)-0.097*Textura$sand/100+0.043))-(Textura$CC_Prov+(1.283*Textura$CC_Prov*Textura$CC_Prov-0.374*Textura$CC_Prov-0.015))
 Textura$Perme_3<- (log(Textura$CC_Prov+(1.283*Textura$CC_Prov*Textura$CC_Prov-0.374*Textura$CC_Prov-0.015))-log(Textura$PM_Vol))/(log(1500)-log(33))
 Textura$Perme_mm_dia<- (1930*Textura$Perme_2^(3-Textura$Perme_3))*24
-
 
 # Water retention capabilitie
 # This parameter is not necesary for AquaCrop but for mapping (el mundo paper)
 Textura$CRAD<-Textura$CC_Vol-Textura$PM_Vol
 
 # Saturation
-
-
-Textura$sand_fix
-Textura$clay_fix
-Textura$MO_fix
-
-
-sand<-27.24/100
-clay<-51.94/100
-mo<-1.6968
 
 aa52<-0.278*sand+0.034*clay+0.022*mo-0.018*sand*mo-0.027*clay*mo-0.584*sand*clay+0.078
 y52<--0.251*sand+0.195*clay+0.011*mo+0.006*sand*mo-0.027*clay*mo+0.452*sand*clay+0.299
@@ -118,25 +102,11 @@ Textura$ah52=1-(Textura$ag52/2.65)
 Textura$sat=Textura$ah52*100
 
 
-Textura$sand_fix
-Textura$clay_fix
-Textura$silt_fix
-Textura$MO_fix
-Textura$CC_Vol
-Textura$PM_Vol
-Textura$Perme_mm_dia
-Textura$CRAD
-Textura$CC_Prov
-summary(Textura$sat)
 
-
-
-str(Textura)
-summary(Textura$CC_Vol)
 
 
 writeGDAL(dataset=Textura["CC_Vol"],fname="ImagesOut/FiledCapacity_percent.tif",drivername="GTiff",type="Float32",options="TFW=YES")
-writeGDAL(dataset=Textura["CC_Prov"],fname="ImagesOut/FiledCapacity_percent.tif",drivername="GTiff",type="Float32",options="TFW=YES")
+writeGDAL(dataset=Textura["CC_Prov"],fname="ImagesOut/CC_Provisional.tif",drivername="GTiff",type="Float32",options="TFW=YES")
 
 writeGDAL(dataset=Textura["PM_Vol"],fname="ImagesOut/WiltingPoint.tif",drivername="GTiff",type="Float32",options="TFW=YES")
 writeGDAL(dataset=Textura["Perme_mm_dia"],fname="ImagesOut/Ksat_mm_dia.tif",drivername="GTiff",type="Float32",options="TFW=YES")
