@@ -42,16 +42,8 @@ Textura$CC_Vol<-Textura$CC_Prov+(1.283*Textura$CC_Prov-0.374*Textura$CC_Prov-0.0
 Textura$PM_Prov<- -0.024*Textura$sand/100+0.487*Textura$clay/100+0.006*Textura$MO+0.005*Textura$sand/100*Textura$MO-0.013*Textura$clay/100*Textura$clay+0.068*Textura$sand/100*Textura$clay/100+0.031
 Textura$PM_Vol<-Textura$PM_Prov+Textura$PM_Prov*0.14-0.02 # if (PM_Vol < 0) {PM_Prov<-0.017545}
 
-<<<<<<< HEAD
-#Textura$PM_Vol<-ifelse(test=(Textura$PM_Prov+Textura$PM_Prov*0.14-0.02)<0,yes=1.3e-06,no=Textura$PM_Vol+Textura$PM_Vol*0.14-0.02)
-Textura$PM_Vol<-Textura$PM_Prov+Textura$PM_Prov*0.14-0.02
-summary(Textura$PM_Vol)
-Textura$PM_Vol<-ifelse(Textura$PM_Vol>=0,yes=Textura$PM_Vol,no=0.017545+0.017545*0.14-0.02)
-summary(Textura$PM_Vol)
-=======
 Textura$PM_Vol<-ifelse(test=Textura$PM_Vol<0,yes=1.0e-06,no=Textura$PM_Vol)
 
->>>>>>> dc3334a8690c5dd4e0ed70905f145701d40add9a
 
 # if ((PM_Prov+PM_Prov*0.14-0.02)<0){
 #     PM_Vol<-0.017545+0.017545*0.14-0.02
@@ -87,9 +79,6 @@ Textura$Perme_mm_dia<- (1930*Textura$Perme_2^(3-Textura$Perme_3))*24
 # This parameter is not necesary for AquaCrop but for mapping (el mundo paper)
 Textura$CRAD<-Textura$CC_Vol-Textura$PM_Vol
 
-<<<<<<< HEAD
-
-=======
 # Saturation
 
 
@@ -143,16 +132,8 @@ summary(Textura$sat)
 
 
 str(Textura)
->>>>>>> dc3334a8690c5dd4e0ed70905f145701d40add9a
 summary(Textura$CC_Vol)
-summary(Textura$PM_Vol)
-summary(Textura$CRAD)
 
-<<<<<<< HEAD
-writeGDAL(dataset=Textura["CRAD"],fname="Results/CRAD.tif",drivername="GTiff",type="Float32",options="TFW=YES")
-writeGDAL(dataset=Textura["CC_Vol"],fname="Results/FiledCapacity.tif",drivername="GTiff",type="Float32",options="TFW=YES")
-writeGDAL(dataset=Textura["PM_Vol"],fname="Results/WiltingPoint.tif",drivername="GTiff",type="Float32",options="TFW=YES")
-=======
 
 writeGDAL(dataset=Textura["CC_Vol"],fname="ImagesOut/FiledCapacity_percent.tif",drivername="GTiff",type="Float32",options="TFW=YES")
 writeGDAL(dataset=Textura["CC_Prov"],fname="ImagesOut/FiledCapacity_percent.tif",drivername="GTiff",type="Float32",options="TFW=YES")
@@ -166,7 +147,6 @@ writeGDAL(dataset=Textura["sand"],fname="ImagesOut/Sand.tif",drivername="GTiff",
 writeGDAL(dataset=Textura["silt"],fname="ImagesOut/Silt.tif",drivername="GTiff",type="Float32",options="TFW=YES")
 writeGDAL(dataset=Textura["clay"],fname="ImagesOut/Clay.tif",drivername="GTiff",type="Float32",options="TFW=YES")
 writeGDAL(dataset=Textura["MO"],fname="ImagesOut/MO.tif",drivername="GTiff",type="Float32",options="TFW=YES")
->>>>>>> dc3334a8690c5dd4e0ed70905f145701d40add9a
 
 
 
