@@ -1,29 +1,33 @@
 
-AjustaimagenesDeTextura<-function(dirOut="ImagesOut/"){
+AjustaimagenesDeTextura<-function(dirOut="ImagesIn/Resampled/"){
     
     # Carga de las imagenes interpoladas mediante Regression Kriging de textura (Arena y limo).
     # se ajusta cada imagen al marco y resolución de trabajo
     
-    gdalwarp(srcfile="Textura/RegressionKriging/500m_exp/RK_Sand.tif",dstfile=paste(dirOut,"RK_Sand_NoData.tif",sep="",collapse=NULL),
-             t_srs='EPSG:25830', of="GTiff", ot="Float32", co="TFW=YES", srcnodata= "0",
-             dstnodata="-9999",tr="500 500",te="165150 4439190 602150 4789190")
-    
-    gdalwarp(srcfile="Textura/RegressionKriging/500m_exp/RK_Silt.tif",dstfile=paste(dirOut,"RK_Silt_NoData.tif",sep="",collapse=NULL),
-             t_srs='EPSG:25830', of="GTiff", ot="Float32", co="TFW=YES", srcnodata= "0",
-             dstnodata="-9999",tr="500 500",te="165150 4439190 602150 4789190")
+#     gdalwarp(srcfile="Textura/RegressionKriging/500m_exp/RK_Sand.tif",dstfile=paste(dirOut,"RK_Sand_NoData.tif",sep="",collapse=NULL),
+#              t_srs='EPSG:25830', of="GTiff", ot="Float32", co="TFW=YES", srcnodata= "0",
+#              dstnodata="-9999",tr="500 500",te="165150 4439190 602150 4789190")
+#     
+#     gdalwarp(srcfile="Textura/RegressionKriging/500m_exp/RK_Silt.tif",dstfile=paste(dirOut,"RK_Silt_NoData.tif",sep="",collapse=NULL),
+#              t_srs='EPSG:25830', of="GTiff", ot="Float32", co="TFW=YES", srcnodata= "0",
+#              dstnodata="-9999",tr="500 500",te="165150 4439190 602150 4789190")
        
-    gdalwarp(srcfile="Textura/SimpleKriging/500m_exp/SK_Arena_500m.tif",dstfile=paste(dirOut,"SK_Sand_Resample.tif",sep="",collapse=NULL),
+    gdalwarp(srcfile="ImagesIn/Original/SK_Arena_500m.tif",dstfile=paste(dirOut,"sand.tif",sep="",collapse=NULL),
              t_srs='EPSG:25830', of="GTiff", ot="Float32", co="TFW=YES",
              dstnodata="-9999", tr="500 500",te="165150 4439190 602150 4789190")
     
-    gdalwarp(srcfile="Textura/SimpleKriging/500m_exp/SK_Limo_500m.tif",dstfile=paste(dirOut,"SK_Silt_Resample.tif",sep="",collapse=NULL),
+    gdalwarp(srcfile="ImagesIn/Original/SK_Limo_500m.tif",dstfile=paste(dirOut,"silt.tif",sep="",collapse=NULL),
+             t_srs='EPSG:25830', of="GTiff", ot="Float32", co="TFW=YES",
+             dstnodata="-9999", tr="500 500",te="165150 4439190 602150 4789190")
+    
+    gdalwarp(srcfile="ImagesIn/Original/SK_MO_500m.tif",dstfile=paste(dirOut,"MO.tif",sep="",collapse=NULL),
              t_srs='EPSG:25830', of="GTiff", ot="Float32", co="TFW=YES",
              dstnodata="-9999", tr="500 500",te="165150 4439190 602150 4789190")
     
     
 }
 
-cargaDatos<-function(dirIn="ImagesOut/"){
+cargaDatos<-function(dirIn="ImagesIn/Resampled/"){
     Tif_files<-list.files(path=dirIn,pattern="*.tif")
     tfw_file<-list.files(path=dirIn,pattern="*.tfw")
     xml_file<-list.files(path=dirIn,pattern="*.xml")
@@ -42,12 +46,21 @@ cargaDatos<-function(dirIn="ImagesOut/"){
         }
         
     }
+
+    covar.grid$clay<-100-(covar.grid$sand+covar.grid$silt)
+    covar.grid$clay<-ifelse(covar.grid$clay<0,0,covar.grid$clay)
+    print("Sand statistics:")
+    print(summary(covar.grid$sand))
     
-    covar.grid$sand_fix<-ifelse(is.na(covar.grid$RK_Sand_NoData),covar.grid$SK_Sand_Resample,covar.grid$RK_Sand_NoData)
-    covar.grid$silt_fix<-ifelse(is.na(covar.grid$RK_Silt_NoData),covar.grid$SK_Silt_Resample,covar.grid$RK_Silt_NoData)
-    covar.grid$clay_fix<-100-(covar.grid$sand_fix+covar.grid$silt_fix)
-    covar.grid$MO_fix<-covar.grid$SK_OrganicMatter_Resample
-    covar.grid$clay_fix<-ifelse(covar.grid$clay_fix<0,0,covar.grid$clay_fix)
+    print("Silt statistics:")
+    print(summary(covar.grid$silt))
+    
+    print("Clay statistics:")
+    print(summary(covar.grid$clay))
+    
+    print("MO statistics:")
+    print(summary(covar.grid$MO))
+    
 
     return(covar.grid)
     
