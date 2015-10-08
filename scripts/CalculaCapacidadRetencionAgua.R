@@ -136,7 +136,7 @@ summary(Textura$CC_Vol)
 
 
 writeGDAL(dataset=Textura["CC_Vol"],fname="ImagesOut/FiledCapacity_percent.tif",drivername="GTiff",type="Float32",options="TFW=YES")
-writeGDAL(dataset=Textura["CC_Prov"],fname="ImagesOut/FiledCapacity_percent.tif",drivername="GTiff",type="Float32",options="TFW=YES")
+writeGDAL(dataset=Textura["CC_Prov"],fname="ImagesOut/CC_provisional.tif",drivername="GTiff",type="Float32",options="TFW=YES")
 
 writeGDAL(dataset=Textura["PM_Vol"],fname="ImagesOut/WiltingPoint.tif",drivername="GTiff",type="Float32",options="TFW=YES")
 writeGDAL(dataset=Textura["Perme_mm_dia"],fname="ImagesOut/Ksat_mm_dia.tif",drivername="GTiff",type="Float32",options="TFW=YES")
