@@ -61,9 +61,55 @@ cargaDatos<-function(dirIn="ImagesIn/Resampled/"){
     print("MO statistics:")
     print(summary(covar.grid$MO))
     
-
     return(covar.grid)
     
     
 }
+
+
+
+AjustaimagenesDeTexturaConRregressionKriging<-function(dirOut="ImagesIn/Original/Temp/"){
+    
+    gdalwarp(srcfile="ImagesIn/Original/SK_Arena_500m.tif",dstfile=paste(dirOut,"sk_sand.tif",sep="",collapse=NULL),
+             t_srs='EPSG:25830', of="GTiff", ot="Float32", co="TFW=YES",
+             dstnodata="-9999", tr="500 500",te="165150 4439190 602150 4789190")
+    
+    gdalwarp(srcfile="ImagesIn/Original/SK_Limo_500m.tif",dstfile=paste(dirOut,"sk_silt.tif",sep="",collapse=NULL),
+             t_srs='EPSG:25830', of="GTiff", ot="Float32", co="TFW=YES",
+             dstnodata="-9999", tr="500 500",te="165150 4439190 602150 4789190")
+    
+    gdalwarp(srcfile="ImagesIn/Original/SK_MO_500m.tif",dstfile=paste(dirOut,"sk_MO.tif",sep="",collapse=NULL),
+             t_srs='EPSG:25830', of="GTiff", ot="Float32", co="TFW=YES",
+             dstnodata="-9999", tr="500 500",te="165150 4439190 602150 4789190")
+    
+    gdalwarp(srcfile="ImagesIn/Original/RK_Sand.tif",dstfile=paste(dirOut,"rk_sand.tif",sep="",collapse=NULL),
+             t_srs='EPSG:25830', of="GTiff", ot="Float32", co="TFW=YES",
+             dstnodata="-9999",srcnodata="0", tr="500 500",te="165150 4439190 602150 4789190")
+    
+    gdalwarp(srcfile="ImagesIn/Original/RK_Silt.tif",dstfile=paste(dirOut,"rk_silt.tif",sep="",collapse=NULL),
+             t_srs='EPSG:25830', of="GTiff", ot="Float32", co="TFW=YES",
+             dstnodata="-9999",srcnodata="0", tr="500 500",te="165150 4439190 602150 4789190")
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+}
+
 
