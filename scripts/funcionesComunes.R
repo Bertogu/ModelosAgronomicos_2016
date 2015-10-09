@@ -27,7 +27,7 @@ AjustaimagenesDeTextura<-function(dirOut="ImagesIn/Resampled/"){
     
 }
 
-cargaDatos<-function(dirIn="ImagesIn/Resampled/"){
+cargaDatos<-function(dirIn="ImagesIn/Resampled/",sk=TRUE){
     Tif_files<-list.files(path=dirIn,pattern="*.tif")
     tfw_file<-list.files(path=dirIn,pattern="*.tfw")
     xml_file<-list.files(path=dirIn,pattern="*.xml")
@@ -46,26 +46,32 @@ cargaDatos<-function(dirIn="ImagesIn/Resampled/"){
         }
         
     }
-
-    covar.grid$clay<-100-(covar.grid$sand+covar.grid$silt)
-    covar.grid$clay<-ifelse(covar.grid$clay<0,0,covar.grid$clay)
-    print("Sand statistics:")
-    print(summary(covar.grid$sand))
     
-    print("Silt statistics:")
-    print(summary(covar.grid$silt))
-    
-    print("Clay statistics:")
-    print(summary(covar.grid$clay))
-    
-    print("MO statistics:")
-    print(summary(covar.grid$MO))
+    if (sk==TRUE){
+        
+        covar.grid$clay<-100-(covar.grid$sand+covar.grid$silt)
+        covar.grid$clay<-ifelse(covar.grid$clay<0,0,covar.grid$clay)
+        print("Sand statistics:")
+        print(summary(covar.grid$sand))
+        
+        print("Silt statistics:")
+        print(summary(covar.grid$silt))
+        
+        print("Clay statistics:")
+        print(summary(covar.grid$clay))
+        
+        print("MO statistics:")
+        print(summary(covar.grid$MO))
+        
+        return(covar.grid)
+            
+        
+    }
     
     return(covar.grid)
-    
+
     
 }
-
 
 
 AjustaimagenesDeTexturaConRregressionKriging<-function(dirOut="ImagesIn/Original/Temp/"){
@@ -90,18 +96,19 @@ AjustaimagenesDeTexturaConRregressionKriging<-function(dirOut="ImagesIn/Original
              t_srs='EPSG:25830', of="GTiff", ot="Float32", co="TFW=YES",
              dstnodata="-9999",srcnodata="0", tr="500 500",te="165150 4439190 602150 4789190")
     
+    imagenesAModificar<-cargaDatos("ImagesIn/Original/Temp/",sk=FALSE)
     
     
+    imagenesAModificar$MO<-imagenesAModificar$sk_MO
+    imagenesAModificar$silt<-ifelse(test=is.na(imagenesAModificar$rk_silt),yes=imagenesAModificar$sk_silt,
+                                    no=imagenesAModificar$rk_silt)
+    imagenesAModificar$sand<-ifelse(test=is.na(imagenesAModificar$rk_silt),yes=imagenesAModificar$sk_sand,
+                                    no=imagenesAModificar$rk_sand)
     
     
-    
-    
-    
-    
-    
-    
-    
-    
+    writeGDAL(dataset=imagenesAModificar["sand"],fname="ImagesIn/Resampled/sand.tif",drivername="GTiff",type="Float32",options="TFW=YES")
+    writeGDAL(dataset=imagenesAModificar["silt"],fname="ImagesIn/Resampled/silt.tif",drivername="GTiff",type="Float32",options="TFW=YES")
+    writeGDAL(dataset=imagenesAModificar["MO"],fname="ImagesIn/Resampled/MO.tif",drivername="GTiff",type="Float32",options="TFW=YES")
     
     
     
