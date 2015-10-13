@@ -14,20 +14,25 @@ AjustaimagenesDeTextura<-function(dirOut="ImagesIn/Resampled/"){
        
     gdalwarp(srcfile="ImagesIn/Original/SK_Arena_500m.tif",dstfile=paste(dirOut,"sand.tif",sep="",collapse=NULL),
              t_srs='EPSG:25830', of="GTiff", ot="Float32", co="TFW=YES",
-             dstnodata="-9999", tr="500 500",te="165150 4439190 602150 4789190")
+             dstnodata="-9999", tr="500 500",te="164400 4438440 602900 4789940")
     
     gdalwarp(srcfile="ImagesIn/Original/SK_Limo_500m.tif",dstfile=paste(dirOut,"silt.tif",sep="",collapse=NULL),
              t_srs='EPSG:25830', of="GTiff", ot="Float32", co="TFW=YES",
-             dstnodata="-9999", tr="500 500",te="165150 4439190 602150 4789190")
+             dstnodata="-9999", tr="500 500",te="164400 4438440 602900 4789940")
     
     gdalwarp(srcfile="ImagesIn/Original/SK_MO_500m.tif",dstfile=paste(dirOut,"MO.tif",sep="",collapse=NULL),
              t_srs='EPSG:25830', of="GTiff", ot="Float32", co="TFW=YES",
-             dstnodata="-9999", tr="500 500",te="165150 4439190 602150 4789190")
+             dstnodata="-9999", tr="500 500",te="164400 4438440 602900 4789940")
     
     
 }
 
 cargaDatos<-function(dirIn="ImagesIn/Resampled/",sk=TRUE){
+# This function load the texture images in a SpatialGridDataFrame structure
+# parameters:
+#   - dirIn: Directory where texture images are stored
+#   - sk: wethear clay must be compute or only load data
+    
     Tif_files<-list.files(path=dirIn,pattern="*.tif")
     tfw_file<-list.files(path=dirIn,pattern="*.tfw")
     xml_file<-list.files(path=dirIn,pattern="*.xml")
@@ -63,8 +68,7 @@ cargaDatos<-function(dirIn="ImagesIn/Resampled/",sk=TRUE){
         print("MO statistics:")
         print(summary(covar.grid$MO))
         
-        return(covar.grid)
-            
+        return(covar.grid)            
         
     }
     
@@ -75,26 +79,31 @@ cargaDatos<-function(dirIn="ImagesIn/Resampled/",sk=TRUE){
 
 
 AjustaimagenesDeTexturaConRregressionKriging<-function(dirOut="ImagesIn/Original/Temp/"){
+
+    # Resample texture images: Simple Kriging and Regression Kriging. Then load them (sk=Flase) 
+    # and fill the gaps in RK images with Simple kriging values. Finally export the results in 
+    # the resampled directory.
+    
     
     gdalwarp(srcfile="ImagesIn/Original/SK_Arena_500m.tif",dstfile=paste(dirOut,"sk_sand.tif",sep="",collapse=NULL),
              t_srs='EPSG:25830', of="GTiff", ot="Float32", co="TFW=YES",
-             dstnodata="-9999", tr="500 500",te="165150 4439190 602150 4789190")
+             dstnodata="-9999", tr="500 500",te="164400 4438440 602900 4789940")
     
     gdalwarp(srcfile="ImagesIn/Original/SK_Limo_500m.tif",dstfile=paste(dirOut,"sk_silt.tif",sep="",collapse=NULL),
              t_srs='EPSG:25830', of="GTiff", ot="Float32", co="TFW=YES",
-             dstnodata="-9999", tr="500 500",te="165150 4439190 602150 4789190")
+             dstnodata="-9999", tr="500 500",te="164400 4438440 602900 4789940")
     
     gdalwarp(srcfile="ImagesIn/Original/SK_MO_500m.tif",dstfile=paste(dirOut,"sk_MO.tif",sep="",collapse=NULL),
              t_srs='EPSG:25830', of="GTiff", ot="Float32", co="TFW=YES",
-             dstnodata="-9999", tr="500 500",te="165150 4439190 602150 4789190")
+             dstnodata="-9999", tr="500 500",te="164400 4438440 602900 4789940")
     
     gdalwarp(srcfile="ImagesIn/Original/RK_Sand.tif",dstfile=paste(dirOut,"rk_sand.tif",sep="",collapse=NULL),
              t_srs='EPSG:25830', of="GTiff", ot="Float32", co="TFW=YES",
-             dstnodata="-9999",srcnodata="0", tr="500 500",te="165150 4439190 602150 4789190")
+             dstnodata="-9999",srcnodata="0", tr="500 500",te="164400 4438440 602900 4789940")
     
     gdalwarp(srcfile="ImagesIn/Original/RK_Silt.tif",dstfile=paste(dirOut,"rk_silt.tif",sep="",collapse=NULL),
              t_srs='EPSG:25830', of="GTiff", ot="Float32", co="TFW=YES",
-             dstnodata="-9999",srcnodata="0", tr="500 500",te="165150 4439190 602150 4789190")
+             dstnodata="-9999",srcnodata="0", tr="500 500",te="164400 4438440 602900 4789940")
     
     imagenesAModificar<-cargaDatos("ImagesIn/Original/Temp/",sk=FALSE)
     
@@ -109,12 +118,6 @@ AjustaimagenesDeTexturaConRregressionKriging<-function(dirOut="ImagesIn/Original
     writeGDAL(dataset=imagenesAModificar["sand"],fname="ImagesIn/Resampled/sand.tif",drivername="GTiff",type="Float32",options="TFW=YES")
     writeGDAL(dataset=imagenesAModificar["silt"],fname="ImagesIn/Resampled/silt.tif",drivername="GTiff",type="Float32",options="TFW=YES")
     writeGDAL(dataset=imagenesAModificar["MO"],fname="ImagesIn/Resampled/MO.tif",drivername="GTiff",type="Float32",options="TFW=YES")
-    
-    
-    
-    
-    
-    
     
     
 }

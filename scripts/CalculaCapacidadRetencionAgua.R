@@ -98,16 +98,6 @@ writeGDAL(dataset=Textura["MO"],fname="ImagesOut/MO.tif",drivername="GTiff",type
 
 
 
-imagenesAModificar<-cargaDatos("ImagesIn/Original/Temp/",sk=FALSE)
-
-imagenesAModificar$MO<-imagenesAModificar$sk_MO
-
-imagenesAModificar$silt<-ifelse(test=is.na(imagenesAModificar$rk_silt),yes=imagenesAModificar$sk_silt,
-                                no=imagenesAModificar$rk_silt)
-
-imagenesAModificar$sand<-ifelse(test=is.na(imagenesAModificar$rk_silt),yes=imagenesAModificar$sk_sand,
-                                no=imagenesAModificar$rk_sand)
-
 
 
 
