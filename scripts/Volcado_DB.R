@@ -13,6 +13,9 @@ library(plyr)
 library(ggplot2)
 # library(e1071)
 library(maptools)
+library(sqldf)
+
+
 source("scripts/funcionesComunes.R")
 
 
@@ -33,10 +36,8 @@ ptos.prediccion$columna<-round((ptos.prediccion$coords.x1-min(ptos.prediccion$co
 # ptos.prediccion$X<-x_min+1000*(ptos.prediccion$columna)
 # ptos.prediccion$y<-y_min+1000*(ptos.prediccion$fila)
 
-summary(ptos.prediccion$y-ptos.prediccion$coords.x2)
 
-str(ptos.prediccion)
-
+vuelcaSoilProperties2DB(dirDB="BD/Calibracion_2016.sqlite",soilDataFrame=ptos.prediccion)
 
 
 
