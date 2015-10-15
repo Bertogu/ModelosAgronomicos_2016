@@ -1,0 +1,18 @@
+BEGIN TRANSACTION;
+DROP TABLE IF EXISTS SOIL_PROPERTIES_CYL;
+CREATE TABLE SOIL_PROPERTIES_CYL AS 
+	SELECT ROUND("fila") AS FILA, 
+	ROUND("columna") AS COLUMNA, 
+	ROUND("coords.x1") AS COOR_X,
+	ROUND("coords.x2") AS COOR_Y,
+	ROUND("Clay",1) AS CLAY, 
+	ROUND("Sand",1) AS SAND, 
+	ROUND("Silt",1) AS LIMO,
+	ROUND("MO",1) AS MO, 
+	ROUND("Sat_percen_vol",1) AS SAT,
+	ROUND("FC_percen_vol",1) AS FC_VOL, 
+	ROUND("WP_percen_vol",1) AS WP,
+	ROUND("CRAD_percen_vol",1) AS CRA_VOL, 
+	ROUND("Ksat_mm_dia",1) AS KSAT_MM_DIA 
+	FROM "Soil_Temp";
+DROP TABLE IF EXISTS Soil_Temp;
