@@ -146,7 +146,8 @@ vuelcaSoilProperties2DB<-function(dirDB,soilDataFrame){
     ROUND("FC_percen_vol",1) AS FC_VOL, 
     ROUND("WP_percen_vol",1) AS WP_VOL,
     ROUND("CRAD_percen_vol",1) AS CRA_VOL, 
-    ROUND("Ksat_mm_dia",1) AS KSAT_MM_DIA 
+    ROUND("Ksat_mm_dia",1) AS KSAT_MM_DIA,
+    ROUND("Soil_depth_m") AS SOIL_DEPTH_M
     FROM "Soil_Temp";'
     
     dbSendQuery(conn = connExp,query)

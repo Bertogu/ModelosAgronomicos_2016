@@ -35,6 +35,8 @@ Textura<-cargaDatos(sk=TRUE)
 
 
 
+
+
 ########################################
 ## Formulas for FC, WP and Permeability
 ########################################
@@ -77,7 +79,7 @@ Textura$af52=(1-Textura$ae52)*2.65
 Textura$ag52=Textura$af52*1
 Textura$ah52=1-(Textura$ag52/2.65)
 Textura$sat=Textura$ah52*100
-
+str(Textura)
 
 # Export water content
 writeGDAL(dataset=Textura["CC_Vol"],fname="ImagesOut/FC_percen_vol.tif",drivername="GTiff",type="Float32",options="TFW=YES")
@@ -85,6 +87,8 @@ writeGDAL(dataset=Textura["PM_Vol"],fname="ImagesOut/WP_percen_vol.tif",driverna
 writeGDAL(dataset=Textura["sat"],fname="ImagesOut/Sat_percen_vol.tif",drivername="GTiff",type="Float32",options="TFW=YES")
 writeGDAL(dataset=Textura["Perme_mm_dia"],fname="ImagesOut/Ksat_mm_dia.tif",drivername="GTiff",type="Float32",options="TFW=YES")
 writeGDAL(dataset=Textura["CRAD"],fname="ImagesOut/CRAD_percen_vol.tif",drivername="GTiff",type="Float32",options="TFW=YES")
+writeGDAL(dataset=Textura["Soil_depth"],fname="ImagesOut/Soil_depth_m.tif",drivername="GTiff",type="Float32",options="TFW=YES")
+
 
 # Export Texture
 writeGDAL(dataset=Textura["sand"],fname="ImagesOut/Sand.tif",drivername="GTiff",type="Float32",options="TFW=YES")
