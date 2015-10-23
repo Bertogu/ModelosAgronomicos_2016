@@ -49,7 +49,6 @@ Textura$PM_Vol<-Textura$PM_Prov+Textura$PM_Prov*0.14-0.02 # if (PM_Vol < 0) {PM_
 Textura$PM_Prov<-ifelse(test=Textura$PM_Vol<0,yes=0.017545,no=Textura$PM_Prov)
 Textura$PM_Vol<-ifelse(test=Textura$PM_Vol<0,yes=1.0e-06,no=Textura$PM_Vol) # if (PM_Vol < 0) {PM_Prov<-0.017545}
 
-
 Textura$Perme_1<- 0.278*Textura$sand/100+0.034*Textura$clay/100+0.022*Textura$MO-0.018*Textura$sand/100*Textura$MO-0.027*Textura$clay/100*Textura$MO-0.584*Textura$sand/100*Textura$clay/100+0.078
 Textura$Perme_2 <- 1-(1-(Textura$Perme_1+0.636*Textura$Perme_1-0.107+Textura$CC_Prov+(1.283*Textura$CC_Prov*Textura$CC_Prov -0.374*Textura$CC_Prov-0.015)-0.097*Textura$sand/100+0.043))-(Textura$CC_Prov+(1.283*Textura$CC_Prov*Textura$CC_Prov-0.374*Textura$CC_Prov-0.015))
 Textura$Perme_3<-(log(Textura$CC_Prov+(1.283*Textura$CC_Prov*Textura$CC_Prov-0.374*Textura$CC_Prov-0.015))-log(Textura$PM_Prov+0.14*Textura$PM_Prov-0.02))/(log(1500)-log(33))

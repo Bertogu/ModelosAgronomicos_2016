@@ -142,12 +142,12 @@ vuelcaSoilProperties2DB<-function(dirDB,soilDataFrame){
     ROUND("Sand",1) AS SAND, 
     ROUND("Silt",1) AS LIMO,
     ROUND("MO",1) AS MO, 
-    ROUND("Sat_percen_vol",1) AS SAT_VOL,
-    ROUND("FC_percen_vol",1) AS FC_VOL, 
-    ROUND("WP_percen_vol",1) AS WP_VOL,
-    ROUND("CRAD_percen_vol",1) AS CRA_VOL, 
-    ROUND("Ksat_mm_dia",1) AS KSAT_MM_DIA,
-    ROUND("Soil_depth_m") AS SOIL_DEPTH_M
+    ROUND("SAT",1) AS SAT_VOL,
+    ROUND("FC",1) AS FC_VOL, 
+    ROUND("WP",1) AS WP_VOL,
+    ROUND("CRAD",1) AS CRA_VOL, 
+    ROUND("KSAT",1) AS KSAT_MM_DIA,
+    ROUND("THCK") AS SOIL_DEPTH_M
     FROM "Soil_Temp";'
     
     dbSendQuery(conn = connExp,query)
